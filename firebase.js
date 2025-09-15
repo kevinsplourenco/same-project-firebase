@@ -1,11 +1,10 @@
 export const firebaseConfig = {
-  apiKey: "AIzaSyC2-xHByT0qQBYA8TdkBZbQPQ8mirHGXWM",
-  authDomain: "same-40d0e.firebaseapp.com",
-  projectId: "same-40d0e",
-  storageBucket: "same-40d0e.firebasestorage.app",
-  messagingSenderId: "288241109960",
-  appId: "1:288241109960:web:12c483943aba541330cefd",
-  measurementId: "G-FWY5QBJQL9",
+apiKey: 'YOUR_API_KEY',
+authDomain: 'YOUR_AUTH_DOMAIN',
+projectId: 'YOUR_PROJECT_ID',
+storageBucket: 'YOUR_STORAGE_BUCKET',
+messagingSenderId: 'YOUR_MSG_SENDER_ID',
+appId: 'YOUR_APP_ID',
 };
 
 import { initializeApp, getApps } from "firebase/app";
@@ -32,3 +31,4 @@ function requireUID() {
 export const userCol = (name) => collection(db, "tenants", requireUID(), name);
 export const userDoc = (...segments) =>
   doc(db, "tenants", requireUID(), ...segments);
+
