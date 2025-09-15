@@ -1,16 +1,17 @@
 export const firebaseConfig = {
-apiKey: 'YOUR_API_KEY',
-authDomain: 'YOUR_AUTH_DOMAIN',
-projectId: 'YOUR_PROJECT_ID',
-storageBucket: 'YOUR_STORAGE_BUCKET',
-messagingSenderId: 'YOUR_MSG_SENDER_ID',
-appId: 'YOUR_APP_ID',
+  apiKey: "AIzaSyC2-xHByT0qQBYA8TdkBZbQPQ8mirHGXWM",
+  authDomain: "same-40d0e.firebaseapp.com",
+  projectId: "same-40d0e",
+  storageBucket: "same-40d0e.firebasestorage.app",
+  messagingSenderId: "288241109960",
+  appId: "1:288241109960:web:12c483943aba541330cefd",
+  measurementId: "G-FWY5QBJQL9",
 };
 
 import { initializeApp, getApps } from "firebase/app";
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getFirestore, collection } from "firebase/firestore";
+import { getFirestore, collection, doc } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 export const app =
@@ -21,7 +22,13 @@ export const auth = initializeAuth(app, {
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
-// Multi-tenant simples (troque para UID do usuário se desejar)
-export const TENANT_ID = "default";
-export const colPath = (name) => collection(db, "tenants", TENANT_ID, name);
+function requireUID() {
+  const uid = auth.currentUser?.uid;
+  if (!uid) throw new Error("Not authenticated");
+  return uid;
+}
 
+// Helpers de caminho escopados ao usuário logado (tenant = UID)
+export const userCol = (name) => collection(db, "tenants", requireUID(), name);
+export const userDoc = (...segments) =>
+  doc(db, "tenants", requireUID(), ...segments);
